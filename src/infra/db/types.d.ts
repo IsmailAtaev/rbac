@@ -9,12 +9,25 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
   ? ColumnType<S, I | undefined, U>
   : ColumnType<T, T | undefined, T>;
 
-export interface DocumentType {
+export type Timestamp = ColumnType<Date, Date | string, Date | string>;
+
+export type UserRole = "admin" | "user";
+
+export interface Users {
+  birthday: Timestamp | null;
+  createdAt: Generated<Timestamp>;
+  deletedAt: Timestamp | null;
+  email: string;
+  firstName: string;
+  lastName: string | null;
+  middleName: string | null;
   id: Generated<string>;
-  name: string;
+  password: string;
+  role: Generated<UserRole>;
+  status: Generated<boolean>;
+  updatedAt: Generated<Timestamp>;
 }
 
 export interface DB {
-  documentType: DocumentType;
-  example_table: ExampleTable;
+  users: Users;
 }

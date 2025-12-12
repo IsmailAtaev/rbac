@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "rm -rf ./build && npx tsx watch --env-file=.env src/server.ts",
+    "dev": "rm -rf ./dist && npx tsx watch --env-file=.env src/index.ts",
     "build": "tsc",
-    "start": "node --env-file=.env build/src/index.js",
+    "start": "node --env-file=.env dist/src/index.js",
     "codegen": "kysely-codegen --out-file ./src/infra/db/types.d.ts",
-    "reset": "npx kysely migrate:rollback --all && npx kysely migrate:latest && npx kysely seed:run && npm run codegen"
+    "reset": "npx kysely migrate:rollback --all && npx kysely migrate:latest && npx kysely seed:run && npm run codegen",
+    "migrate": "npx kysely migrate:latest && npx kysely seed:run && npm run codegen"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,8 @@
     "@types/express": "^5.0.5",
     "@types/node": "^24.10.1",
     "@types/pg": "^8.15.6",
+    "kysely-codegen": "^0.18.5",
+    "kysely-ctl": "^0.13.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.3"
   }
