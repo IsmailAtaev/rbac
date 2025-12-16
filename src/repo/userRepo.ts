@@ -20,7 +20,6 @@ const getAll = async (p: Filter & PaginationUtil['LimitOffset']) => {
   if (p.lastName) q = q.where('users.lastName', 'ilike', `%${p.lastName}%`);
   if (p.middleName) q = q.where('users.lastName', 'ilike', `%${p.middleName}%`);
   if (p.isDeleted === true) q = q.where('users.deletedAt', 'is not', null);
-  if (p.isDeleted === false) q = q.where('users.deletedAt', 'is', null);
   if (p.text) {
     q = q.where(o =>
       o.or([
@@ -71,14 +70,13 @@ const getOne = (id: string) => {
 const getByEmail = (email: string) => {
   return db
     .selectFrom(table)
-    .where('users.deletedAt', 'is', null)
     .where('email', '=', email)
     .selectAll()
     .executeTakeFirst();
 };
 
 const findOne = async (p: Filter) => {
-  let q = db.selectFrom(table).where('users.deletedAt', 'is', null);
+  let q = db.selectFrom(table);
 
   if (p.id) q = q.where('users.id', '=', p.id);
   if (p.email) q = q.where('users.email', '=', p.email);
@@ -114,14 +112,6 @@ const remove = (id: string) => {
     .executeTakeFirst();
 };
 
-const softDelete = (id: string) => {
-  return db
-    .updateTable(table)
-    .where('id', '=', id)
-    .set({ deletedAt: new Date() })
-    .returningAll()
-    .executeTakeFirst();
-};
 
 export const userRepo = {
   getAll,
@@ -129,7 +119,6 @@ export const userRepo = {
   findOne,
   create,
   edit,
-  getByPhone: getByEmail,
+  getByEmail,
   remove,
-  softDelete
 };

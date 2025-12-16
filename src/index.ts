@@ -1,3 +1,12 @@
+import * as tsConfigPaths from 'tsconfig-paths';
+
+tsConfigPaths.register({
+    baseUrl: './dist/src',
+    paths: {
+        'src/*': ['./*']
+    }
+});
+
 import express from 'express';
 import { connectCheck } from "./infra/db";
 import { envCheck } from "./infra/env";
@@ -11,7 +20,7 @@ const app = express();
 
 app.use(express.json());
 app.use('/api', router);
-
+ 
 const main = async () => {
     try {
         await envCheck();

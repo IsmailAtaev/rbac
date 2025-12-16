@@ -6,8 +6,8 @@ export async function up(db: Kysely<any>): Promise<void> {
   await db.schema
     .createTable(table)
     .ifNotExists()
+    // .addColumn('id', 'uuid', c => c.primaryKey().defaultTo(sql`uuidv7()`)) // version >= 18
     .addColumn('id', 'uuid', c => c.primaryKey().defaultTo(sql`gen_random_uuid()`))
-    // .addColumn('id', 'uuid', c => c.primaryKey().defaultTo(sql`uuidv7()`))
     .addColumn('firstName', 'varchar', c => c.notNull())
     .addColumn('lastName', 'varchar')
     .addColumn('middleName', 'varchar')
@@ -18,7 +18,6 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('role', 'varchar', c => c.notNull())
     .addColumn('createdAt', 'timestamptz', c => c.notNull().defaultTo(sql`now()`))
     .addColumn('updatedAt', 'timestamptz', c => c.notNull().defaultTo(sql`now()`))
-    .addColumn('deletedAt', 'timestamptz')
     .execute();
 
   await db.schema.createIndex('users_email_index').on(table).column('email').execute();

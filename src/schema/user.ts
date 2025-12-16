@@ -19,6 +19,12 @@ export const user = z.object({
   deletedAt: z.coerce.date().nullish(),
 });
 
+
+export const login = user.pick({
+  email: true,
+  password: true,
+});
+
 const userSort = user
   .pick({
     id: true,
@@ -81,6 +87,7 @@ export type User = z.infer<typeof user>;
 export type UserGetAll = z.infer<typeof userGetAll>;
 export type Create = z.infer<typeof create>;
 export type UserEdit = z.infer<typeof edit>;
+export type Login = z.infer<typeof login>;
 
 export const userSchema = {
   schema: user,
@@ -90,6 +97,7 @@ export const userSchema = {
   create,
   edit: edit,
   changePassword,
+  login,
 };
 
 export type UserSchema = {
@@ -98,4 +106,5 @@ export type UserSchema = {
   Create: Create;
   Edit: UserEdit;
   ChangePassword: ChangePassword;
+  Login: Login
 };
