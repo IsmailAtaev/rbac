@@ -3,6 +3,14 @@
 /node_modules
 /build
 
+# Local database and cache data
+/data
+
+# compiled output
+/dist
+/node_modules
+/build
+
 # Logs
 logs
 *.log
