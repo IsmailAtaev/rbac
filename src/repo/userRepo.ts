@@ -88,6 +88,9 @@ const findOne = async (p: Filter) => {
 };
 
 const create = (p: Insert) => {
+  console.log("p");
+  console.log(p);
+
   return db
     .insertInto(table)
     .values(p)

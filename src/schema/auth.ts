@@ -12,7 +12,7 @@ export const meRes = user.pick({
   role: true,
 });
 
-export const login = user.pick({ login: true, password: true });
+export const login = user.pick({ email: true, password: true });
 export type Login = z.infer<typeof login>;
 export const loginRes = meRes;
 

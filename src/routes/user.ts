@@ -1,10 +1,11 @@
 import { Router, Request, Response } from 'express';
 import { userController } from 'src/controllers';
+import { authMiddleware, roleGuard } from 'src/middleware/auth';
 
 export const userRouter = Router();
 
 // GET /users/
-userRouter.get('/', userController.getAll);
+userRouter.get('/', authMiddleware, roleGuard(['admin']), userController.getAll);
 
 // GET /users/:id
 // userRouter.get('/:id', (req: Request, res: Response) => {
